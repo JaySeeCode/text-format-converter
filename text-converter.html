@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"
+    integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"
+    integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4"
+    crossorigin="anonymous">
+  </script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"
+    integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1"
+    crossorigin="anonymous">
+  </script>
+
+  <title>Text-Format Converter</title>
+
+  <style>
+    .btn {
+      margin-top: 10px;
+      margin-right: 15px;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <h1 class="display-3">Text-Format Converter</h1>
+      <p class="lead">
+        Type something in the input textbox, click a button, convert your text to the format of your choice.
+      </p>
+    </div>
+    <div class="container form-group">
+      <h5 for="input-text-field" class="text-center">Input</h5>
+      <textarea class="form-control" id="input-text-field" rows="3"></textarea>
+      <section id="buttons" class="text-center">
+        <button type="button" id="uppercase" onclick="captureText(this.id)"
+          class="btn btn-danger">TO UPPERCASE</button>
+        <button type="button" id="lowercase" onclick="captureText(this.id)"
+          class="btn btn-primary">to lowercase</button>
+        <button type="button" id="camelCase" onclick="captureText(this.id)"
+          class="btn btn-warning">toCamelCase</button>
+        <div class="dropdown">
+          <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Gramatically proper...
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" id="sentence" onclick="captureText(this.id)"
+              href="#">Sentence</a>
+            <a class="dropdown-item" id="paragraph" onclick="captureText(this.id)"
+              href="#">Paragraph</a>
+          </div>
+        </div>
+        <button type="button" class="btn btn-secondary" id="test" onclick="captureText(this.id)">Test</button>
+      </section>
+    </div>
+  </div>
+
+  <div class="container form-group">
+    <h5 for="output-text-field" class="text-center">Output</h5>
+    <textarea readonly class="form-control border border-dark" id="output-text-field" rows="3"></textarea>
+  </div>
+
+
+  <!-- JavaScript logic -->
+  <script>
+    const captureText = (conversionType) => {
+      // Capture reference to output-text-field in variable
+      let output = document.getElementById('output-text-field');
+      // Capture input text from input-text-field
+      let input = document.getElementById('input-text-field').value;
+      console.log(conversionType);
+      convertText(input, conversionType, output)
+    }
+
+    const convertText = (text, type, outputField) => {
+      // We check for the conversion type and dump it
+      // into the output-text-field in its respective format
+      switch (type) {
+        case 'uppercase':
+          outputField.innerHTML = text.toUpperCase();
+          break;
+        case 'lowercase':
+          outputField.innerHTML = text.toLowerCase();
+          break;
+        case 'camelCase':
+          text = camelize(text);
+          outputField.innerHTML = text;
+          break;
+
+      }
+    }
+
+    const camelize = (str) => {
+      return str.replace(/(?:^\w|[A-Z]|\b\w)/g, function(letter, index) {
+        return index == 0 ? letter.toLowerCase() : letter.toUpperCase();
+      }).replace(/\s+/g, '');
+    }
+  </script>
+</body>
+</html>
